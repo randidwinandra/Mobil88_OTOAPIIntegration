@@ -1,0 +1,80 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Mobil88 Database Retreiver",
+    "version": "1.0.0",
+    "title": "Mobil88 Cars Data API",
+    "contact": {
+      "email": "dev@logique.co.id"
+    }
+  },
+  "host": "52.163.225.234",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "cars",
+      "description": "Retreive cars data"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/cars.php": {
+      "get": {
+        "tags": [
+          "cars"
+        ],
+        "summary": "Get cars data",
+        "description": "",
+        "operationId": "getCars",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "Date from (using format Y-m-d)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "Api-Token",
+            "in": "header",
+            "description": "API token key",
+            "required": true,
+            "type": "string",
+            "default": "Pa9M9X9KgOqz48MI4HAf286hueQuhqHi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          },
+          "400": {
+            "description": "Failed to get cars data"
+          },
+          "401": {
+            "description": "Api-Token is missing or invalid"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "Api-Token",
+      "in": "header"
+    }
+  }
+}
