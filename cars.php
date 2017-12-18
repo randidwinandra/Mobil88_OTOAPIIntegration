@@ -12,6 +12,7 @@ if ($_SERVER['HTTP_API_TOKEN'] != 'Pa9M9X9KgOqz48MI4HAf286hueQuhqHi') {
     http_response_code(401);
     header('Content-Type: application/json');
     echo json_encode($data);
+    exit;
 }
 
 $date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
@@ -29,11 +30,11 @@ $conn = sqlsrv_connect($serverName, $connectionOptions);
 
 $where = "";
 if (isset($date_from) && validateDate($date_from, 'Y-m-d')) {
-    $where = "WHERE C.CREATED_DATE >= '{$date_from}' and C.CREATED_DATE < GETDATE()";
+    $where = "WHERE LAST_MODIFIED_DATE >= '{$date_from}' AND LAST_MODIFIED_DATE <= GETDATE()";
 }
 
 // Get cars
-$tsql = "SELECT C.ID, C.BRAND, C.MODEL, C.TYPE, C.CC, C.DESCRIPTION, C.CASH_PRICE, C.MANUFACTURE_YEAR, C.TRANSMISSION, C.PLATE_NO, C.COLOUR, C.FUEL, C.KM, C.VEHICLE_REGISTRATION_EXPIRY_DATE, B.LOCATION_CODE FROM MI_CAR C JOIN MI_BRANCH B ON B.ID = C.BRANCH_ID $where";
+$tsql = "SELECT * FROM MI_CAR $where";
 $getResults = sqlsrv_query($conn, $tsql);
 
 $data = [];
@@ -49,7 +50,7 @@ if ($getResults === false) { // error
     $data['data'] = [];
     while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
         $car_id = $row['ID'];
-        $image_sql = "SELECT URL, DEFAULT_FLG FROM MI_CAR_IMAGE WHERE CAR_ID = '{$car_id}'";
+        $image_sql = "SELECT * FROM MI_CAR_IMAGE WHERE CAR_ID = '{$car_id}'";
         $imageResults = sqlsrv_query($conn, $image_sql);
         $image = []; // pre-emptied the image variable (image from last CAR_ID will be removed)
         if ($imageResults !== false) { // image is exist
