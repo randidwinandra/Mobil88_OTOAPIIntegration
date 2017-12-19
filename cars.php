@@ -14,9 +14,7 @@ if ($_SERVER['HTTP_API_TOKEN'] != 'Pa9M9X9KgOqz48MI4HAf286hueQuhqHi') {
     echo json_encode($data);
     exit;
 }
-
 $date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
-
 // SQL Server Credentials
 $serverName = "m88otodbserver.database.windows.net";
 $connectionOptions = array(
@@ -24,7 +22,6 @@ $connectionOptions = array(
     "Uid" => "Mobi88Oto@m88otodbserver",
     "PWD" => "Sera12345"
 );
-
 //Establishes the connection
 $conn = sqlsrv_connect($serverName, $connectionOptions);
 
