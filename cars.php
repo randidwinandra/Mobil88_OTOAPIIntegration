@@ -62,7 +62,8 @@ if ($getResults === false) { // error
     }
 }
 sqlsrv_free_stmt($getResults);
-
+echo ($data)
+break;
 // Send data
 http_response_code($code);
 header('Content-Type: application/json');
