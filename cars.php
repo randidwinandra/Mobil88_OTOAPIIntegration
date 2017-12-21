@@ -59,7 +59,7 @@ if ($getResults === false) { // error
             }
         }
         sqlsrv_free_stmt($imageResults);
-        $row['IMAGES'] = $image;
+        //$row['IMAGES'] = $image;
         $data['data'][] = $row;
     }
 }
