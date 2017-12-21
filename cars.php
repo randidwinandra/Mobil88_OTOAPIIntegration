@@ -46,8 +46,6 @@ if ($getResults === false) { // error
     $data['status'] = true;
     $data['message'] = 'Cars data has been successfully received';
     $data['data'] = [];
-    echo "masuk disini";
-    break;
     while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
         $car_id = $row['ID'];
         $image_sql = "SELECT * FROM MI_CAR_IMAGE WHERE CAR_ID = '{$car_id}'";
