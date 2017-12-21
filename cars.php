@@ -62,7 +62,7 @@ if ($getResults === false) { // error
     }
 }
 sqlsrv_free_stmt($getResults);
-echo ($data)
+echo $data."Ini datanya";
 break;
 // Send data
 http_response_code($code);
