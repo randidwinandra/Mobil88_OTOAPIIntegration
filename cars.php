@@ -14,26 +14,27 @@ if ($_SERVER['HTTP_API_TOKEN'] != 'Pa9M9X9KgOqz48MI4HAf286hueQuhqHi') {
     echo json_encode($data);
     exit;
 }
+
 $date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
+
 // SQL Server Credentials
-$serverName = "mobil88server.database.windows.net";
+$serverName = "m88otodbserver.database.windows.net";
 $connectionOptions = array(
-    "Database" => "mobil88db",
-    "Uid" => "admin88",
-    "PWD" => "Mobil8888"
+    "Database" => "M88OTODB",
+    "Uid" => "Mobi88Oto@m88otodbserver",
+    "PWD" => "Sera12345"
 );
+
 //Establishes the connection
 $conn = sqlsrv_connect($serverName, $connectionOptions);
 
 $where = "";
 if (isset($date_from) && validateDate($date_from, 'Y-m-d')) {
-    $where = "WHERE LAST_MODIFIED_DATE >= '{$date_from}' AND LAST_MODIFIED_DATE <= GETDATE()";
+    $where = "WHERE LAST_MODIFIED_DATE >= '{$date_from}' AND LAST_MODIFIED_DATE <= GETDATE() AND STATUS != 'Repair'";
 }
 
 // Get cars
 $tsql = "SELECT ID, CREATED_DATE, LAST_MODIFIED_DATE, PLATE_NO, BRANCH_ID, LOCATION_ID, BRAND, MODEL, TYPE, VARIANT, COLOUR, CC, FUEL, TRANSMISSION, MANUFACTURE_YEAR, KM, VEHICLE_REGISTRATION_EXPIRY_DATE, STATUS, IMAGE_THUMBNAIL, CASH_PRICE, GARDAN, DESCRIPTION, MANUAL_BOOK, SERVICE_BOOK, SPARE_KEY FROM MI_CAR $where";
-
-
 $getResults = sqlsrv_query($conn, $tsql);
 
 $data = [];
@@ -49,7 +50,7 @@ if ($getResults === false) { // error
     $data['data'] = [];
     while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
         $car_id = $row['ID'];
-        $image_sql = "SELECT * FROM MI_CAR_IMAGE WHERE CAR_ID = '{$car_id}'";
+        $image_sql = "SELECT ID, CREATED_DATE, LAST_MODIFIED_DATE, CAR_ID, URL, DEFAULT_FLG FROM MI_CAR_IMAGE WHERE CAR_ID = '{$car_id}'";
         $imageResults = sqlsrv_query($conn, $image_sql);
         $image = []; // pre-emptied the image variable (image from last CAR_ID will be removed)
         if ($imageResults !== false) { // image is exist
