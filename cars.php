@@ -16,11 +16,11 @@ if ($_SERVER['HTTP_API_TOKEN'] != 'Pa9M9X9KgOqz48MI4HAf286hueQuhqHi') {
 }
 $date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
 // SQL Server Credentials
-$serverName = "m88otodbserver.database.windows.net";
+$serverName = "mobil88server.database.windows.net";
 $connectionOptions = array(
-    "Database" => "M88OTODB",
-    "Uid" => "Mobi88Oto@m88otodbserver",
-    "PWD" => "Sera12345"
+    "Database" => "mobil88db",
+    "Uid" => "admin88",
+    "PWD" => "Mobil8888"
 );
 //Establishes the connection
 $conn = sqlsrv_connect($serverName, $connectionOptions);
