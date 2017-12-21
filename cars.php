@@ -68,8 +68,8 @@ sqlsrv_free_stmt($getResults);
 // Send data
 http_response_code($code);
 header('Content-Type: application/json');
-var_dump($data);
-break;
+print_r($data);
+exit();
 echo json_encode($data);
 
 function validateDate($date, $format = 'Y-m-d H:i:s')
