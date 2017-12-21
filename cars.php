@@ -24,16 +24,17 @@ $connectionOptions = array(
     "Uid" => "admin88",
     "PWD" => "Mobil8888"
 );
+
 //Establishes the connection
 $conn = sqlsrv_connect($serverName, $connectionOptions);
 
 $where = "";
 if (isset($date_from) && validateDate($date_from, 'Y-m-d')) {
-    $where = "WHERE LAST_MODIFIED_DATE >= '{$date_from}' AND LAST_MODIFIED_DATE <= GETDATE() AND STATUS != 'Repair' ORDER BY LAST_MODIFIED_DATE ASC ";
+    $where = "WHERE LAST_MODIFIED_DATE >= '{$date_from}' AND LAST_MODIFIED_DATE <= GETDATE() AND STATUS != 'Repair'";
 }
 
 // Get cars
-$tsql = "SELECT ID, CREATED_DATE, LAST_MODIFIED_DATE, PLATE_NO, BRANCH_ID, LOCATION_ID, BRAND, MODEL, TYPE, VARIANT, COLOUR, CC, FUEL, TRANSMISSION, MANUFACTURE_YEAR, KM, VEHICLE_REGISTRATION_EXPIRY_DATE, STATUS, CASH_PRICE, GARDAN, MANUAL_BOOK, SERVICE_BOOK, SPARE_KEY FROM MI_CAR $where";
+$tsql = "SELECT ID, CREATED_DATE, LAST_MODIFIED_DATE, PLATE_NO, BRANCH_ID, LOCATION_ID, BRAND, MODEL, TYPE, VARIANT, COLOUR, CC, FUEL, TRANSMISSION, MANUFACTURE_YEAR, KM, VEHICLE_REGISTRATION_EXPIRY_DATE, STATUS, CASH_PRICE, GARDAN, DESCRIPTION, MANUAL_BOOK, SERVICE_BOOK, SPARE_KEY FROM MI_CAR $where";
 $getResults = sqlsrv_query($conn, $tsql);
 
 $data = [];
@@ -58,7 +59,7 @@ if ($getResults === false) { // error
             }
         }
         sqlsrv_free_stmt($imageResults);
-        //$row['IMAGES'] = $image;
+        $row['IMAGES'] = $image;
         $data['data'][] = $row;
     }
 }
