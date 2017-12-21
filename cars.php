@@ -18,11 +18,11 @@ if ($_SERVER['HTTP_API_TOKEN'] != 'Pa9M9X9KgOqz48MI4HAf286hueQuhqHi') {
 $date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
 
 // SQL Server Credentials
-$serverName = "mobil88server.database.windows.net";
+$serverName = "m88otodbserver.database.windows.net";
 $connectionOptions = array(
-    "Database" => "mobil88db",
-    "Uid" => "admin88",
-    "PWD" => "Mobil8888"
+    "Database" => "M88OTODB",
+    "Uid" => "Mobi88Oto@m88otodbserver",
+    "PWD" => "Sera12345"
 );
 
 //Establishes the connection
@@ -34,7 +34,7 @@ if (isset($date_from) && validateDate($date_from, 'Y-m-d')) {
 }
 
 // Get cars
-$tsql = "SELECT TOP 2 ID, CREATED_DATE, LAST_MODIFIED_DATE, PLATE_NO, BRANCH_ID, LOCATION_ID, BRAND, MODEL, TYPE, VARIANT, COLOUR, CC, FUEL, TRANSMISSION, MANUFACTURE_YEAR, KM, VEHICLE_REGISTRATION_EXPIRY_DATE, STATUS, IMAGE_THUMBNAIL, CASH_PRICE, GARDAN, DESCRIPTION, MANUAL_BOOK, SERVICE_BOOK, SPARE_KEY FROM MI_CAR $where";
+$tsql = "SELECT ID, CREATED_DATE, LAST_MODIFIED_DATE, PLATE_NO, BRANCH_ID, LOCATION_ID, BRAND, MODEL, TYPE, VARIANT, COLOUR, CC, FUEL, TRANSMISSION, MANUFACTURE_YEAR, KM, VEHICLE_REGISTRATION_EXPIRY_DATE, STATUS, IMAGE_THUMBNAIL, CASH_PRICE, GARDAN, DESCRIPTION, MANUAL_BOOK, SERVICE_BOOK, SPARE_KEY FROM MI_CAR $where";
 $getResults = sqlsrv_query($conn, $tsql);
 
 $data = [];
@@ -68,8 +68,7 @@ sqlsrv_free_stmt($getResults);
 // Send data
 http_response_code($code);
 header('Content-Type: application/json');
-var_dump($data);
-//echo json_encode($data);
+echo json_encode($data);
 
 function validateDate($date, $format = 'Y-m-d H:i:s')
 {
