@@ -32,6 +32,8 @@ if (isset($date_from) && validateDate($date_from, 'Y-m-d')) {
 
 // Get cars
 $tsql = "SELECT * FROM MI_CAR $where";
+echo $tsql;
+
 $getResults = sqlsrv_query($conn, $tsql);
 
 $data = [];
