@@ -30,7 +30,7 @@ $conn = sqlsrv_connect($serverName, $connectionOptions);
 
 $where = "";
 if (isset($date_from) && validateDate($date_from, 'Y-m-d')) {
-    $where = "WHERE LAST_MODIFIED_DATE >= '{$date_from}' AND LAST_MODIFIED_DATE <= GETDATE() AND STATUS != 'Repair' AND DESCRIPTION != 'n/a'";
+    $where = "WHERE LAST_MODIFIED_DATE >= '{$date_from}' AND LAST_MODIFIED_DATE <= GETDATE() AND STATUS != 'Repair' ";
 }
 
 // Get cars
@@ -64,6 +64,9 @@ if ($getResults === false) { // error
     }
 }
 sqlsrv_free_stmt($getResults);
+
+var_dum($data);
+break;
 
 // Send data
 http_response_code($code);
